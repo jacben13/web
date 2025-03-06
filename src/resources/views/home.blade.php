@@ -13,7 +13,7 @@
       <div class="info-box">
         <span class="info-box-icon bg-aqua elevation-1"><i class="fa fa-server"></i></span>
         <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::seat.online_layers') }}</span>
+          <span class="info-box-text">{{ trans('web::seat.online_players') }}</span>
           <span class="info-box-number">
             {{ $server_status['players'] ?? trans('web::seat.unknown') }}
           </span>
@@ -71,7 +71,7 @@
 
       <!-- Ore Badge -->
       <div class="info-box">
-        <span class="info-box-icon bg-yellow elevation-1"><i class="far fa-coins"></i></span>
+        <span class="info-box-icon bg-yellow elevation-1"><i class="fas fa-coins"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_ratted_isk') }} <small class="text-muted">({{ trans('web::seat.current_month') }})</small></span>
           <span class="info-box-number">
@@ -204,7 +204,7 @@
   <script type="text/javascript">
 
     // Player Count
-    $.get("{{ route('home.chart.serverstatus') }}", function (data) {
+    $.get("{{ route('seatcore::home.chart.serverstatus') }}", function (data) {
 
       new Chart($("canvas#serverstatus"), {
         type   : 'line',
@@ -223,7 +223,7 @@
     });
 
     // Esi Response Times
-    $.get("{{ route('home.chart.serverresponse') }}", function (data) {
+    $.get("{{ route('seatcore::home.chart.serverresponse') }}", function (data) {
 
       new Chart($("canvas#serverresponse"), {
         type   : 'line',
@@ -242,7 +242,7 @@
     });
 
     if ($('canvas#skills-level').length)
-      $.get("{{ route('character.view.skills.graph.level', ['character' => auth()->user()->main_character]) }}", function (data) {
+      $.get("{{ route('seatcore::character.view.skills.graph.level', ['character' => auth()->user()->main_character]) }}", function (data) {
         new Chart($("canvas#skills-level"), {
           type: 'pie',
           data: data
@@ -250,7 +250,7 @@
       });
 
     if ($('canvas#skills-coverage').length)
-      $.get("{{ route('character.view.skills.graph.coverage', ['character' => auth()->user()->main_character]) }}", function (data) {
+      $.get("{{ route('seatcore::character.view.skills.graph.coverage', ['character' => auth()->user()->main_character]) }}", function (data) {
         new Chart($('canvas#skills-coverage'), {
           type   : 'radar',
           data   : data,

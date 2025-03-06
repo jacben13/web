@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,20 +21,20 @@
  */
 
 return [
-    'date'       => 'Datum',
-    'ref_type'   => 'Typ',
+    'date' => 'Datum',
+    'ref_type' => 'Typ',
     'from_party' => 'Von',
-    'to_party'   => 'An',
-    'amount'     => 'Betrag',
-    'balance'    => 'Kontostand',
+    'to_party' => 'An',
+    'amount' => 'Betrag',
+    'balance' => 'Kontostand',
 
-    'order'      => 'Auftrag',
-    'type'       => 'Typ',
-    'location'   => 'Ort',
-    'price'      => 'Preis',
-    'quantity'   => 'Menge',
-    'total'      => 'Total',
-    'party'      => 'Gruppe',
+    'order' => 'Auftrag',
+    'type' => 'Typ',
+    'location' => 'Ort',
+    'price' => 'Preis',
+    'quantity' => 'Menge',
+    'total' => 'Gesamt',
+    'party' => 'Gruppe',
 
     'acceleration_gate_fee' => 'Beschleunigungstorgebühr',
     'advertisement_listing_fee' => 'Anzeigenauflistungsgebühr',
@@ -78,7 +78,7 @@ return [
     'contract_deposit_refund' => 'Vertragsdepot Rückerstattung',
     'contract_deposit_sales_tax' => 'Vertragsdepot Umsatzsteuer',
     'contract_price' => 'Vertragspreis',
-    'contract_price_payment_corp' => 'Contract Price Payment Corp', // still no useful tzranslation here
+    'contract_price_payment_corp' => 'Contract Price Payment Corp',
     'contract_reversal' => 'Vertragsumkehr',
     'contract_reward' => 'Vertragsbelohnung',
     'contract_reward_deposited' => 'Hinterlegte Vertragsbelohnung',
@@ -101,10 +101,14 @@ return [
     'datacore_fee' => 'Datacore-Gebühr',
     'dna_modification_fee' => 'DNA-Änderungsgebühr',
     'docking_fee' => 'Docking-Gebühr',
-    'duel_wager_escrow' => 'Duel Wager Escrow', // still no useful tzranslation here
-    'duel_wager_payment' => 'Duel Wager Payment', // still no useful tzranslation here
-    'duel_wager_refund' => 'Duel Wager Refund', // still no useful tzranslation here
+    'duel_wager_escrow' => 'Duel Wager Escrow',
+    'duel_wager_payment' => 'Duel Wager Payment',
+    'duel_wager_refund' => 'Duel Wager Refund',
+    'ess_escrow_transfer' => 'ESS Escrow Transfer',
     'factory_slot_rental_fee' => 'Factory Slot Rental Fee',
+    'flux_payout' => 'HyperNode Payout',
+    'flux_tax' => 'HyperNode Tax',
+    'flux_ticket_sale' => 'HyperNode Ticket Sale',
     'gm_cash_transfer' => 'GM Geldtransfer',
     'industry_job_tax' => 'Industrie Job Steuern',
     'infrastructure_hub_maintenance' => 'Infrastructure Hub Wartung',

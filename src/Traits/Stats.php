@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ trait Stats
      */
     public function getTotalCharacterMiningIsk(array $character_ids): ?float
     {
-        return CharacterMining::selectRaw('SUM(quantity * average) as total_mined_value')
+        return CharacterMining::selectRaw('SUM(quantity * adjusted_price) as total_mined_value')
             ->leftJoin('market_prices', 'character_minings.type_id', '=', 'market_prices.type_id')
             ->whereIn('character_id', $character_ids)
             ->where('year', carbon()->year)
@@ -70,9 +70,10 @@ trait Stats
      */
     public function getTotalCharacterRattingIsk(array $character_ids): ?float
     {
-        return CharacterWalletJournal::select('amount')
-            ->whereIn('second_party_id', $character_ids)
-            ->whereIn('ref_type', ['bounty_prizes', 'ess_escrow_transfer'])
+        return CharacterWalletJournal::whereIn('second_party_id', $character_ids)
+            ->whereIn('ref_type', ['bounty_prizes', 'ess_escrow_transfer', 'corporate_reward_payout', 'agent_mission_reward', 'agent_mission_time_bonus_reward'])
+            ->whereYear('date', carbon()->year)
+            ->whereMonth('date', carbon()->month)
             ->sum('amount');
     }
 
@@ -124,30 +125,34 @@ trait Stats
         $in_game_skills = DB::table('invTypes')
             ->join(
                 'invMarketGroups',
-                'invMarketGroups.marketGroupID', '=', 'invTypes.marketGroupID'
+                'invMarketGroups.marketGroupID',
+                '=',
+                'invTypes.marketGroupID'
             )
-            ->where('parentGroupID', '?')// binding at [1]
+            ->where('parentGroupID', '?') // binding at [1]
             ->select(
                 'marketGroupName',
-                DB::raw('COUNT(invTypes.marketGroupID) * 5 as amount')
+                DB::raw('COUNT(*) * 5 as amount')
             )
             ->groupBy('marketGroupName')
             ->toSql();
 
         $character_skills = CharacterSkill::join(
             'invTypes',
-            'invTypes.typeID', '=',
+            'invTypes.typeID',
+            '=',
             'character_skills.skill_id'
         )
             ->join(
                 'invMarketGroups',
-                'invMarketGroups.marketGroupID', '=',
+                'invMarketGroups.marketGroupID',
+                '=',
                 'invTypes.marketGroupID'
             )
-            ->where('character_id', '?')// binding at [2]
+            ->where('character_id', '?') // binding at [2]
             ->select(
                 'marketGroupName',
-                DB::raw('COUNT(invTypes.marketGroupID) * character_skills.trained_skill_level  as amount')
+                DB::raw('COUNT(*) * character_skills.trained_skill_level  as amount')
             )
             ->groupBy(['marketGroupName', 'trained_skill_level'])
             ->toSql();
@@ -162,12 +167,12 @@ trait Stats
             )
             ->select(
                 'a.marketGroupName',
-                DB::raw('a.amount AS gameAmount'),
-                DB::raw('SUM(b.amount) AS characterAmount')
+                DB::raw('a.amount AS game_amount'),
+                DB::raw('SUM(b.amount) AS character_amount')
             )
             ->groupBy(['a.marketGroupName', 'a.amount'])
-            ->addBinding(150, 'select')// binding [1]
-            ->addBinding($character_id, 'select')// binding [2]
+            ->addBinding(150, 'select') // binding [1]
+            ->addBinding($character_id, 'select') // binding [2]
             ->get();
 
         return $skills;

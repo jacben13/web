@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,11 @@
  */
 
 return [
-    'date'         => 'Datum',
-    'ship'         => 'Schiff',
+    'date' => 'Datum',
+    'ship' => 'Schiff',
     'solar_system' => 'Sonnensystem',
-    'victim'       => 'Opfer',
-    'killer'       => 'Killer', // I leave this here, "Killer" is by now pretty much common in german. The translation would actually be "Mörder" but that doesn't really fit here.
+    'victim' => 'Opfer',
+    'killer' => 'Killer',
+    'attackers' => 'Angreifer|Angreifer',
+    'items' => 'Gegenstände',
 ];

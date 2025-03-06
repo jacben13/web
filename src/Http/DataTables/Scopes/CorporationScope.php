@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,7 +104,7 @@ class CorporationScope implements DataTableScope
 
             return [
                 'corporations' => collect($filters->corporation ?? [])->pluck('id')->toArray(),
-                'alliances'    => collect($filters->alliance ?? [])->pluck('id')->toArray(),
+                'alliances' => collect($filters->alliance ?? [])->pluck('id')->toArray(),
             ];
         });
 
@@ -124,6 +124,6 @@ class CorporationScope implements DataTableScope
         // merge all collected characters IDs in a single array and apply filter
         $corporation_ids = array_merge($owner_range, $corporations_range, $alliances_range, $director_range);
 
-        return $query->whereIn($table . '.corporation_id', $corporation_ids);
+        return $query->whereIntegerInRaw($table . '.corporation_id', $corporation_ids);
     }
 }
